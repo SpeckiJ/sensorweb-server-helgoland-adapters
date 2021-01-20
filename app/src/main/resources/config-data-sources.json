@@ -1,23 +1,11 @@
 {
     "dataSources": [
         {
-            "itemName": "fluggs",
-            "url": "https://fluggs.wupperverband.de/sos2/service",
+            "itemName": "ufz-tereno",
+            "url": "https://sos.ufz.de/tereno-public/service",
             "version": "2.0.0",
             "type": "SOS",
-            "supportsFirstLast": true,
-            "job": {
-                "cronExpression": "0 0 0/1 * * ?",
-                "enabled": true,
-                "triggerAtStartup": true
-            }
-        },{
-            "itemName": "irceline",
-            "url": "https://geo.irceline.be/sos/service",
-            "version": "2.0.0",
-            "type": "SOS",
-            "supportsFirstLast": true,
-            "disableHumanReadableName": true,
+            "supportsFirstLast": false,
             "job": {
                 "cronExpression": "0 0 0/1 * * ?",
                 "enabled": true,

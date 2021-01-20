@@ -44,10 +44,13 @@ import org.n52.series.db.beans.DatasetEntity;
 import org.n52.shetland.ogc.gml.AbstractFeature;
 import org.n52.shetland.ogc.om.features.FeatureCollection;
 import org.n52.shetland.ogc.om.features.samplingFeatures.AbstractSamplingFeature;
+import org.n52.shetland.ogc.ows.OwsCapabilities;
 import org.n52.shetland.ogc.ows.service.GetCapabilitiesResponse;
+import org.n52.shetland.ogc.sensorML.SensorML;
 import org.n52.shetland.ogc.sos.Sos2Constants;
 import org.n52.shetland.ogc.sos.SosCapabilities;
 import org.n52.shetland.ogc.sos.SosObservationOffering;
+import org.n52.shetland.ogc.sos.response.DescribeSensorResponse;
 import org.n52.shetland.ogc.sos.response.GetFeatureOfInterestResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -62,8 +65,11 @@ public class HydroSOSConnector extends SOS2Connector {
     private static final Logger LOGGER = LoggerFactory.getLogger(HydroSOSConnector.class);
 
     @Override
-    protected boolean canHandle(DataSourceConfiguration config, GetCapabilitiesResponse capabilities) {
-        return false;
+    protected boolean canHandle(DataSourceConfiguration config, GetCapabilitiesResponse response){
+        OwsCapabilities capabilities = response.getCapabilities();
+        return capabilities.getVersion().equals(Sos2Constants.SERVICEVERSION) &&
+            capabilities.getServiceProvider().isPresent() &&
+            supportsGDA(capabilities);
     }
 
     @Override
@@ -101,6 +107,26 @@ public class HydroSOSConnector extends SOS2Connector {
         String offeringId = addOffering(obsOff, serviceConstellation);
 
         obsOff.getProcedures().forEach(procedureId -> {
+
+            //TODO: Integrate
+            /*
+            try {
+                DescribeSensorResponse describeSensorResponse =
+                    describeSensor(procedureId, "http://www.opengis.net/sensorML/1.0.1", config);
+
+                describeSensorResponse.getProcedureDescriptions().forEach(sosProcedureDescription -> {
+                    ((SensorML) sosProcedureDescription.getProcedureDescription()).getMembers().forEach(smlSystem -> {
+                        ((org.n52.shetland.ogc.sensorML.System) smlSystem).getComponents().forEach(smlComponent -> {
+                            System.out.println(smlComponent.getName());
+                        });
+                    });
+                });
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            */
+
+
             addProcedure(procedureId, true, false, serviceConstellation);
             obsOff.getObservableProperties().forEach(phenomenonId -> {
                 addPhenomenon(phenomenonId, serviceConstellation);

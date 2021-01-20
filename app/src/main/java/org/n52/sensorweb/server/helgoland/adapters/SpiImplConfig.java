@@ -26,6 +26,7 @@
  * or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
  * for more details.
  */
+
 package org.n52.sensorweb.server.helgoland.adapters;
 
 import org.n52.io.response.CategoryOutput;
@@ -56,9 +57,16 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @EnableWebMvc
 @Configuration
-@EnableJpaRepositories(basePackages = {"org.n52.sensorweb.server.db.repositories.core"})
-@ComponentScan(basePackages = { "org.n52.sensorweb.server.db.repositories.core", "org.n52.series.db.assembler.core",
-        "org.n52.series.db.assembler.mapper", "org.n52.sensorweb.server.srv"})
+@EnableJpaRepositories(basePackages = {
+    "org.n52.sensorweb.server.db.repositories.core"
+})
+@ComponentScan(basePackages = {
+    "org.n52.sensorweb.server.db.repositories.core",
+    "org.n52.sensorweb.server.db.assembler.core",
+    "org.n52.sensorweb.server.db.assembler.mapper",
+    "org.n52.sensorweb.server.srv",
+    "org.n52.sensorweb.server.db.factory"
+})
 public class SpiImplConfig {
 
     @Bean
@@ -103,7 +111,7 @@ public class SpiImplConfig {
     }
 
     private <T extends ParameterOutput> ParameterBackwardsCompatibilityAdapter<T> backwardsCompatible(
-            AccessService<T> service) {
+        AccessService<T> service) {
         return new ParameterBackwardsCompatibilityAdapter<>(service);
     }
 

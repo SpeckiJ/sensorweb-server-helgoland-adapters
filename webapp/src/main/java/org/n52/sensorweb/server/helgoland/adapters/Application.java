@@ -34,10 +34,11 @@
 
 package org.n52.sensorweb.server.helgoland.adapters;
 
-import org.n52.series.db.DatabaseConfig;
+import org.n52.sensorweb.server.db.DatabaseConfig;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Import;
 
 @SpringBootApplication

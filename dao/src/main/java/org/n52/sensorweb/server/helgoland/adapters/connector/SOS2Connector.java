@@ -71,10 +71,11 @@ public class SOS2Connector extends AbstractSosConnector {
      */
     @Override
     protected boolean canHandle(DataSourceConfiguration config, GetCapabilitiesResponse response) {
-        OwsCapabilities capabilities = response.getCapabilities();
-        return capabilities.getVersion().equals(Sos2Constants.SERVICEVERSION) &&
-               capabilities.getServiceProvider().isPresent() &&
-               supportsGDA(capabilities);
+        //OwsCapabilities capabilities = response.getCapabilities();
+        //return capabilities.getVersion().equals(Sos2Constants.SERVICEVERSION) &&
+        //       capabilities.getServiceProvider().isPresent() &&
+        //       supportsGDA(capabilities);
+        return false;
     }
 
     @Override
